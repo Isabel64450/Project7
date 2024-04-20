@@ -8,10 +8,7 @@ import streamlit as st
 import shap
 import matplotlib.pyplot as plt
 
-# Obtenez le répertoire courant du script
-#current_directory = os.path.dirname(os.path.abspath(__file__))
 
-# Construisez le chemin approprié pour vos fichiers CSV
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
 
@@ -229,7 +226,7 @@ if col1.button("Predict") or state["data_received"]:
 
     if not state["data_received"]:
         response = requests.post(
-            "http://localhost:5000/predict", json={"SK_ID_CURR": int(sk_id_curr)}
+            "http://0.0.0.0.:5000/predict", json={"SK_ID_CURR": int(sk_id_curr)}
         )
         if response.status_code != 200:
             st.error(f"Erreur lors de l'appel à l'API: {response.status_code}")
