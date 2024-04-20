@@ -46,11 +46,7 @@ def predict():
     para=exp[i]
     toco=para.values
     base=para.base_values
-    #shap.plots.waterfall(exp[i],max_display=15)
-    #plt.savefig('shap_waterfall.jpg', bbox_inches='tight')
-    #shap.plots.force(exp[i],matplotlib=True)
-    #plt.savefig('shap_force.jpg', bbox_inches='tight')
-    # Save the plot to a buffer
+    
     
     return jsonify({
         'probability': proba*100, 
