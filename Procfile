@@ -1,1 +1,1 @@
-web:gunicorn app:backend_P7 
+web: sh setup.sh && streamlit run frontend_P7.py
