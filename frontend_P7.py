@@ -226,7 +226,7 @@ if col1.button("Predict") or state["data_received"]:
 
     if not state["data_received"]:
         response = requests.post(
-            "http://127.0.0.1:8080/predict", json={"SK_ID_CURR": int(sk_id_curr)}
+            "http://localhost:5000/predict", json={"SK_ID_CURR": int(sk_id_curr)}
         )
         if response.status_code != 200:
             st.error(f"Erreur lors de l'appel à l'API: {response.status_code}")
