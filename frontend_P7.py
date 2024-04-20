@@ -229,7 +229,7 @@ if col1.button("Predict") or state["data_received"]:
 
     if not state["data_received"]:
         response = requests.post(
-            "http://127.0.0.1:5000/predict", json={"SK_ID_CURR": int(sk_id_curr)}
+            "http://localhost:5000/predict", json={"SK_ID_CURR": int(sk_id_curr)}
         )
         if response.status_code != 200:
             st.error(f"Erreur lors de l'appel à l'API: {response.status_code}")
@@ -259,7 +259,7 @@ if col1.button("Predict") or state["data_received"]:
     })
     color = compute_color(proba)
     st.empty()
-    col2.markdown(                                                                                 # >{proba:.2f}%</span> (score max: <strong>50%</strong>)</p>",
+    col2.markdown(                                                                              
         f"<p style='margin: 40px;'>Prédiction moyenne pour tous les clients et valeur prédictive pour cette observation en particulier</p>",
         unsafe_allow_html=True,
     )
