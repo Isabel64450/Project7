@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 
 st.set_option('deprecation.showPyplotGlobalUse', False)
-
+st.set_option("server.enableCORS", False)
 
 df_train = pd.read_csv('df_sample_frac_cleaned.csv')
 df_definition_features = pd.read_csv('definition_features.csv')
