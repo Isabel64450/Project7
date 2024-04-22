@@ -1,2 +1,2 @@
-web: sh setup.sh && gunicorn backend_P7.py:app & streamlit run frontend_P7.py
+web: sh setup.sh && streamlit run frontend_P7.py & gunicorn backend_P7.py:app
 
