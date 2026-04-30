@@ -27,25 +27,24 @@ def predict():
     i = df.loc[df['SK_ID_CURR'] == sk_id_curr].index[0]
     # Supprimer la colonne ID pour la prédiction
     sample = sample.drop(columns=['SK_ID_CURR','TARGET'])
-    df = df.drop(columns=['SK_ID_CURR','TARGET'])
-    numerical_columns_selector = selector(dtype_exclude=object)
-    numerical_columns = numerical_columns_selector(sample)
-    
-    categorical_columns_selector = selector(dtype_include=object)
-    categorical_columns = categorical_columns_selector(sample)
-    # Prédire
+   if sample.empty:
+        return jsonify({"error": "ID not found"}), 404
+
+    sample = sample.drop(columns=['SK_ID_CURR', 'TARGET'])
+
+    # Prediction
     prediction = model.predict_proba(sample)
-    proba = prediction[0][1] # Probabilité de la seconde classe
-    sample_trans=preprocess.fit_transform(sample)
-    df_trans=preprocess.fit_transform(df)
-    ore_columns = list(preprocess.named_transformers_['categorical'].named_steps['OrdianlEncoder'].get_feature_names_out(categorical_columns))
-    new_columns = numerical_columns + ore_columns 
-    explainer = shap.TreeExplainer(model['clasifier'],df_trans)
-    shap_values = explainer(df_trans,check_additivity=False)
-    exp=shap.Explanation(shap_values.values[:,:,1],shap_values.base_values[:,1],feature_names=new_columns)
-    para=exp[i]
-    toco=para.values
-    base=para.base_values
+    proba = prediction[0][1]
+
+    # Transform
+    sample_trans = preprocess.transform(sample)
+
+    # SHAP
+    explainer = shap.TreeExplainer(model.named_steps['classifier'])
+    shap_values = explainer(sample_trans)
+
+    toco = shap_values.values[0,:,1]
+    base = shap_values.base_values[0][1]
     
     
     return jsonify({
